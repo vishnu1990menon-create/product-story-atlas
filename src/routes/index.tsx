@@ -1,24 +1,188 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Vishnu Menon — Product Manager, Connected Mobility" },
+      { name: "description", content: "Product Manager at Mercedes-Benz R&D. 12+ years taking embedded and connected products from prototype to scaled, regulated launch." },
+      { property: "og:title", content: "Vishnu Menon — Product Manager, Connected Mobility" },
+      { property: "og:description", content: "Case studies across Mercedes-Benz, Ather Energy and semiconductors." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const stats = [
+  ["100K+", "Guard360 users across 20+ markets"],
+  ["~500 → 5,000", "EV charging locations in 18 months"],
+  ["USD 5M", "annual savings, Ather Drive Control"],
+  ["2 × 40%", "Guard360 complaints and manual effort cut"],
+];
+
+const cases = [
+  {
+    t: "Guard360: shipping a safety-critical feature 6 weeks early",
+    m: "Mercedes-Benz · Cluster lead",
+    p: "Collision detection needed vehicle firmware (12 weeks) and a cloud backend (8 weeks). The backend was blocked on firmware specs, putting launch on a 20-week critical path across 20+ markets.",
+    d: "Decoupled the teams with a vehicle mock system and a single mock contract as the source of truth. Backend development started in week 1, with a weekly sync to keep both sides aligned.",
+    r: "Delivered in 14 weeks instead of 20, with zero integration surprises. The mock pattern is now reused for other multi-component features.",
+  },
+  {
+    t: "Guard360: fixing “pictures not taken” with ticket analysis and LLMs",
+    m: "Mercedes-Benz · Cluster lead",
+    p: "Customers reported missing collision pictures even with the service activated.",
+    d: "Sorted support tickets into three failure buckets (not captured, captured but not stored, stored but not uploaded), and matched them to a visit-to-picture funnel. Shipped fixes per bucket: linked the onboard toggle to service activation, added an activation-screen disclaimer, and ran proactive notification campaigns by head-unit generation. Built an ML-driven engagement workflow and a RAG/LLM ticket-analysis workflow.",
+    r: "40% fewer complaints from the ML-driven workflow, and 40% less manual triage effort from RAG/LLM analysis.",
+  },
+  {
+    t: "Parking for Navigation: growth, plateau and a deliberate sundown",
+    m: "Mercedes-Benz · Product Manager",
+    p: "After market expansion, monthly parking transactions sat flat for a long time.",
+    d: "Built the funnel, daily trackers and location heat maps. They showed users tapping the start-parking notification but not completing, and little repeat use or repeat location. Redesigned onboarding, then expanded deeper within markets by adopting municipality-level rules on the existing UX flow.",
+    r: "3–4x transaction growth and a 1.7x onboarding conversion improvement. Legal and compliance constraints later capped growth, and the product was wound down. Lessons from that reset are in the full case study.",
+  },
+  {
+    t: "Ather Energy: Drive controller, Grid 2.0 and the private charger",
+    m: "Ather Energy · Program Manager, then Product Owner",
+    p: "Scale a hardware-heavy product and a public charging network while keeping cost down.",
+    d: "Led the Drive controller from POC to production and ramp-up, with the business case and feature benchmarking, coordinating supply chain, firmware, hardware and mechanical. Led Grid 2.0 scaling and conceptualized the private charger.",
+    r: "USD 5M annual cost savings, 10–15% higher throughput through streamlined workflows, and the charging network grown from ~500 to ~5,000 locations in 18 months.",
+  },
+];
+
+const career = [
+  ["Product Manager, Mercedes-Benz R&D", "2022 – present · Bangalore", "Guard360 cluster lead and Parking for Navigation. Release management, AI/LLM-driven support tooling, and cross-market regulatory compliance (EU Data Act, PSD2, DSA)."],
+  ["Product Owner, Grid 2.0, Ather Energy", "2019 – 2022", "Drive Control Program Manager, then Grid 2.0 Product Owner. Also Scrum Master on the Gen 2 dashboard and part of the Scrum-to-SAFe move for a 50+ engineer organization."],
+  ["Program Manager, Tessolve Semiconductors", "2017 – 2019", "Post-silicon validation, wafer-out test and packaging programs for TI and Intel, with 85% on-time delivery."],
+  ["Test Lead and NPI Lead, Kaynes Technology", "2014 – 2017", "Evaluation and development kits for Cypress Semiconductor, and new product introduction."],
+];
+
+const skills: [string, string[]][] = [
+  ["Strengths", ["Stakeholder orchestration", "End-to-end ownership", "Release management", "Regulatory compliance", "Funnel and cohort analytics", "Embedded to cloud"]],
+  ["AI and tools", ["RAG pipelines", "Azure AI Foundry", "LLM prompting", "n8n", "Claude API and MCP", "SQL"]],
+  ["Certifications", ["AWS Certified AI Practitioner", "AWS Cloud Practitioner", "SAFe PM/PO", "Design Thinking"]],
+];
+
+function Label({ n, children }: { n: string; children: string }) {
+  return (
+    <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+      <span className="text-accent">{n}</span> — {children}
+    </p>
+  );
+}
+
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen">
+      <header className="sticky top-0 z-10 border-b border-border bg-background/85 backdrop-blur">
+        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <a href="#top" className="font-display text-lg font-semibold">Vishnu Menon</a>
+          <div className="hidden gap-8 text-sm text-muted-foreground sm:flex">
+            {[["work", "Case studies"], ["path", "Career"], ["skills", "Skills"], ["contact", "Contact"]].map(([id, l]) => (
+              <a key={id} href={`#${id}`} className="transition-colors hover:text-accent">{l}</a>
+            ))}
+          </div>
+        </nav>
+      </header>
+
+      <main id="top" className="mx-auto max-w-6xl px-6">
+        <section className="py-20 md:py-32">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Product Manager · Connected Mobility · Bangalore</p>
+          <h1 className="mt-6 max-w-4xl font-display text-4xl leading-[1.08] md:text-6xl">
+            I take complex embedded and connected products from first prototype to <em className="text-accent">scaled, regulated launch.</em>
+          </h1>
+          <p className="mt-8 max-w-2xl text-lg text-muted-foreground">
+            12+ years across semiconductors, EVs and connected vehicles. Today I lead Guard360 and Parking for Navigation at Mercedes-Benz R&D, with a bias for measurable outcomes and honest post-mortems.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <a href="#work" className="rounded-sm bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-accent">Read case studies</a>
+            <a href="#contact" className="rounded-sm border border-foreground px-6 py-3 text-sm font-medium transition-colors hover:border-accent hover:text-accent">Get in touch</a>
+          </div>
+          <dl className="mt-20 grid grid-cols-2 border-t border-border md:grid-cols-4">
+            {stats.map(([v, l]) => (
+              <div key={v} className="border-b border-border py-6 pr-4 md:border-b-0">
+                <dt className="font-display text-3xl md:text-4xl">{v}</dt>
+                <dd className="mt-2 text-sm text-muted-foreground">{l}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        <section id="work" className="scroll-mt-20 border-t border-border py-20">
+          <Label n="01">Case studies</Label>
+          <p className="mt-4 max-w-xl text-muted-foreground">Selected work. Details are kept NDA-safe; full write-ups available on request.</p>
+          <div className="mt-12 space-y-6">
+            {cases.map((c, i) => (
+              <article key={c.t} className="rounded-sm border border-border bg-card p-8 md:p-10">
+                <div className="flex items-baseline gap-4">
+                  <span className="font-mono text-sm text-accent">0{i + 1}</span>
+                  <div>
+                    <h3 className="font-display text-2xl md:text-3xl">{c.t}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{c.m}</p>
+                  </div>
+                </div>
+                <div className="mt-8 grid gap-8 md:grid-cols-3">
+                  {[["Problem", c.p], ["What I did", c.d], ["Result", c.r]].map(([h, b]) => (
+                    <div key={h}>
+                      <h4 className={`font-mono text-xs uppercase tracking-widest ${h === "Result" ? "text-accent" : "text-muted-foreground"}`}>{h}</h4>
+                      <p className={`mt-3 text-sm leading-relaxed ${h === "Result" ? "font-medium" : ""}`}>{b}</p>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="path" className="scroll-mt-20 border-t border-border py-20">
+          <Label n="02">Career</Label>
+          <h2 className="mt-4 font-display text-3xl md:text-4xl">Hardware roots, platform and AI product ownership today.</h2>
+          <ol className="mt-12">
+            {career.map(([r, d, b]) => (
+              <li key={r} className="grid gap-2 border-t border-border py-8 md:grid-cols-[1fr_2fr]">
+                <div>
+                  <p className="font-semibold">{r}</p>
+                  <p className="mt-1 font-mono text-xs text-muted-foreground">{d}</p>
+                </div>
+                <p className="text-muted-foreground">{b}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="border-t border-border pt-8 text-sm text-muted-foreground">B.E. Electrical & Electronics, Anna University · MBA Systems & Operations, SCMS Cochin</p>
+        </section>
+
+        <section id="skills" className="scroll-mt-20 border-t border-border py-20">
+          <Label n="03">Skills and credentials</Label>
+          <div className="mt-12 grid gap-10 md:grid-cols-3">
+            {skills.map(([h, items]) => (
+              <div key={h}>
+                <h3 className="font-display text-xl">{h}</h3>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {items.map((s) => (
+                    <li key={s} className="rounded-full border border-border bg-card px-3 py-1 text-sm">{s}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      </main>
+
+      <section id="contact" className="scroll-mt-20 bg-primary text-primary-foreground">
+        <div className="mx-auto max-w-6xl px-6 py-24">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">04 — Contact</p>
+          <h2 className="mt-4 font-display text-5xl md:text-7xl">Let’s talk.</h2>
+          <p className="mt-6 max-w-xl opacity-75">Open to senior product and program roles in connected and embedded products.</p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            {[["Email", "mailto:you@example.com"], ["LinkedIn", "#"], ["Resume (PDF)", "#"]].map(([l, h]) => (
+              <a key={l} href={h} className="rounded-sm border border-primary-foreground/40 px-6 py-3 text-sm transition-colors hover:border-accent hover:bg-accent">{l}</a>
+            ))}
+          </div>
+          <p className="mt-20 text-xs opacity-60">© 2026 Vishnu Menon. Case studies are shared in NDA-safe form.</p>
+        </div>
+      </section>
     </div>
   );
 }
