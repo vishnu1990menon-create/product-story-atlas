@@ -135,6 +135,9 @@ function Index() {
                     <p className="mt-1 text-sm text-muted-foreground">{c.m}</p>
                   </div>
                 </div>
+                <figure className="mt-8 overflow-hidden rounded-sm border border-border">
+                  <img src={c.img} alt={c.alt} width={1440} height={950} loading="lazy" className="aspect-[3/2] w-full object-cover" />
+                </figure>
                 <div className="mt-8 grid gap-8 md:grid-cols-3">
                   {[["Problem", c.p], ["What I did", c.d], ["Result", c.r]].map(([h, b]) => (
                     <div key={h}>
