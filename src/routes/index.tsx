@@ -1,4 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import mockFlow from "../assets/guard360-mock-flow.webp.asset.json";
+import photoUpload from "../assets/guard360-photo-upload.webp.asset.json";
+import parkingAnalytics from "../assets/parking-analytics.webp.asset.json";
+import atherCharging from "../assets/ather-charging.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,28 +29,32 @@ const cases = [
   {
     t: "Guard360: shipping a safety-critical feature 6 weeks early",
     m: "Mercedes-Benz · Cluster lead",
-    p: "Collision detection needed vehicle firmware (12 weeks) and a cloud backend (8 weeks). The backend was blocked on firmware specs, putting launch on a 20-week critical path across 20+ markets.",
+    img: mockFlow.url,
+    alt: "Illustration of a Mercedes-Benz SUV on a highway at dusk, with a data flow diagram linking the vehicle to a report, a second vehicle and a cloud service",
     d: "Decoupled the teams with a vehicle mock system and a single mock contract as the source of truth. Backend development started in week 1, with a weekly sync to keep both sides aligned.",
     r: "Delivered in 14 weeks instead of 20, with zero integration surprises. The mock pattern is now reused for other multi-component features.",
   },
   {
     t: "Guard360: fixing “pictures not taken” with ticket analysis and LLMs",
     m: "Mercedes-Benz · Cluster lead",
-    p: "Customers reported missing collision pictures even with the service activated.",
+    img: photoUpload.url,
+    alt: "In-car display showing automatic collision detection, captured damage photos and data uploading to the cloud",
     d: "Sorted support tickets into three failure buckets (not captured, captured but not stored, stored but not uploaded), and matched them to a visit-to-picture funnel. Shipped fixes per bucket: linked the onboard toggle to service activation, added an activation-screen disclaimer, and ran proactive notification campaigns by head-unit generation. Built an ML-driven engagement workflow and a RAG/LLM ticket-analysis workflow.",
     r: "40% fewer complaints from the ML-driven workflow, and 40% less manual triage effort from RAG/LLM analysis.",
   },
   {
     t: "Parking for Navigation: growth, plateau and a deliberate sundown",
     m: "Mercedes-Benz · Product Manager",
-    p: "After market expansion, monthly parking transactions sat flat for a long time.",
+    img: parkingAnalytics.url,
+    alt: "Car dashboard showing a city map covered in parking pins beside charts of transactions, usage trends and a location heat map",
     d: "Built the funnel, daily trackers and location heat maps. They showed users tapping the start-parking notification but not completing, and little repeat use or repeat location. Redesigned onboarding, then expanded deeper within markets by adopting municipality-level rules on the existing UX flow.",
     r: "3–4x transaction growth and a 1.7x onboarding conversion improvement. Legal and compliance constraints later capped growth, and the product was wound down. Lessons from that reset are in the full case study.",
   },
   {
     t: "Ather Energy: Drive controller, Grid 2.0 and the private charger",
     m: "Ather Energy · Program Manager, then Product Owner",
-    p: "Scale a hardware-heavy product and a public charging network while keeping cost down.",
+    img: atherCharging.url,
+    alt: "Electric scooter parked at a charging plaza with a modular battery pack and a holographic display of charging-network growth across India",
     d: "Led the Drive controller from POC to production and ramp-up, with the business case and feature benchmarking, coordinating supply chain, firmware, hardware and mechanical. Led Grid 2.0 scaling and conceptualized the private charger.",
     r: "USD 5M annual cost savings, 10–15% higher throughput through streamlined workflows, and the charging network grown from ~500 to ~5,000 locations in 18 months.",
   },
