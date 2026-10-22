@@ -31,6 +31,7 @@ const cases = [
     m: "Mercedes-Benz · Cluster lead",
     img: needBasedAdoption.url,
     ar: "aspect-[19/16]",
+    wrap: "mx-auto max-w-[680px]",
     alt: "Infographic: 80% of trips are routine repeats that need no prompt, notifications cut by 60%, conversion up from 10% to about 25%, and prompts stepping down from full notification to silent notification to an icon glow",
     p: "Adoption looked low because most users had no need for the feature most of the time. Measuring against real need cut notifications by 60% and made them far more relevant.",
     d: "We segmented users by vehicle age, user age, powertrain and usage depth, and found low engagement across all of them. Digging into trip data showed that about 80% of trips were repeats to the same places, such as home and work, where the service was never needed. The usage rate was therefore measured against the wrong base. We identified each user’s regular destinations from weekly trip counts and stored them on the vehicle profile. Prompts at those places were then stepped down, from full notification to silent notification to a passive icon highlight, for 2–4 spots per user. Adoption is now measured against trips where the service is actually useful.",
@@ -41,6 +42,7 @@ const cases = [
     m: "Mercedes-Benz · Cluster lead",
     img: photoUpload.url,
     ar: "aspect-[3/2]",
+    wrap: "",
     alt: "In-car display showing automatic collision detection, captured damage photos and data uploading to the cloud",
     p: "Customers reported missing collision pictures even with the service activated.",
     d: "Sorted support tickets into three failure buckets (not captured, captured but not stored, stored but not uploaded), and matched them to a visit-to-picture funnel. Shipped fixes per bucket: linked the onboard toggle to service activation, added an activation-screen disclaimer, and ran proactive notification campaigns by head-unit generation. Built an ML-driven engagement workflow and a RAG/LLM ticket-analysis workflow.",
@@ -51,6 +53,7 @@ const cases = [
     m: "Mercedes-Benz · Product Manager",
     img: parkingAnalytics.url,
     ar: "aspect-[3/2]",
+    wrap: "",
     alt: "Car dashboard showing a city map covered in parking pins beside charts of transactions, usage trends and a location heat map",
     p: "After market expansion, monthly parking transactions sat flat for a long time.",
     d: "Built the funnel, daily trackers and location heat maps. They showed users tapping the start-parking notification but not completing, and little repeat use or repeat location. Redesigned onboarding, then expanded deeper within markets by adopting municipality-level rules on the existing UX flow.",
@@ -61,6 +64,7 @@ const cases = [
     m: "Ather Energy · Program Manager, then Product Owner",
     img: atherCharging.url,
     ar: "aspect-[3/2]",
+    wrap: "",
     alt: "Electric scooter parked at a charging plaza with a modular battery pack and a holographic display of charging-network growth across India",
     p: "Scale a hardware-heavy product and a public charging network while keeping cost down.",
     d: "Led the Drive controller from POC to production and ramp-up, with the business case and feature benchmarking, coordinating supply chain, firmware, hardware and mechanical. Led Grid 2.0 scaling and conceptualized the private charger.",
@@ -139,7 +143,7 @@ function Index() {
                     <p className="mt-1 text-sm text-muted-foreground">{c.m}</p>
                   </div>
                 </div>
-                <figure className="mt-8 overflow-hidden rounded-sm border border-border">
+                <figure className={`mt-8 overflow-hidden rounded-sm border border-border ${c.wrap}`}>
                   <img src={c.img} alt={c.alt} loading="lazy" className={`${c.ar} w-full object-cover`} />
                 </figure>
                 <div className="mt-8 grid gap-8 md:grid-cols-3">
