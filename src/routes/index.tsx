@@ -168,6 +168,56 @@ function CareerBody({ c }: { c: Career }) {
   );
 }
 
+function ProjectCard({ p }: { p: Project }) {
+  const [failed, setFailed] = useState(false);
+  return (
+    <a
+      href={p.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block overflow-hidden rounded-sm border border-border bg-card transition-colors hover:border-accent"
+    >
+      {failed ? (
+        <div className="flex aspect-video items-center justify-center bg-muted px-4 text-center">
+          <span className="text-sm text-muted-foreground">{p.t}</span>
+        </div>
+      ) : (
+        <div className="relative">
+          {p.panelImg ? (
+            <div className="v-panel-img">
+              <img
+                src={p.img}
+                alt={p.alt}
+                loading="lazy"
+                onError={() => setFailed(true)}
+                className="aspect-video w-full object-cover"
+              />
+            </div>
+          ) : (
+            <img
+              src={p.img}
+              alt={p.alt}
+              loading="lazy"
+              onError={() => setFailed(true)}
+              className="aspect-video w-full object-cover"
+            />
+          )}
+          {p.play && (
+            <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-background/85 ring-1 ring-border">
+                <svg viewBox="0 0 24 24" className="ml-0.5 h-5 w-5 fill-foreground">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
+            </span>
+          )}
+        </div>
+      )}
+      <p className="p-3 text-sm font-medium">{p.t}</p>
+    </a>
+  );
+}
+
 const skills: [string, string[]][] = [
   ["Strengths", ["Stakeholder orchestration", "End-to-end ownership", "Release management", "Regulatory compliance", "Funnel and cohort analytics", "Embedded to cloud"]],
   ["AI and tools", ["RAG pipelines", "Azure AI Foundry", "LLM prompting", "n8n", "Claude API and MCP", "SQL"]],
