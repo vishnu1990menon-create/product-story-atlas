@@ -31,8 +31,8 @@ const cases = [
     m: "Mercedes-Benz · Cluster lead",
     img: needBasedAdoption.url,
     ar: "aspect-[19/16]",
-    mat: "bg-muted/50 p-6 md:p-10",
-    wrap: "mx-auto max-w-[680px] ring-1 ring-border",
+    mat: "bg-muted/50 p-3",
+    wrap: "mx-auto max-w-[340px] ring-1 ring-border",
     alt: "Infographic: 80% of trips are routine repeats that need no prompt, notifications cut by 60%, conversion up from 10% to about 25%, and prompts stepping down from full notification to silent notification to an icon glow",
     p: "Adoption looked low because most users had no need for the feature most of the time. Measuring against real need cut notifications by 60% and made them far more relevant.",
     d: "We segmented users by vehicle age, user age, powertrain and usage depth, and found low engagement across all of them. Digging into trip data showed that about 80% of trips were repeats to the same places, such as home and work, where the service was never needed. The usage rate was therefore measured against the wrong base. We identified each user’s regular destinations from weekly trip counts and stored them on the vehicle profile. Prompts at those places were then stepped down, from full notification to silent notification to a passive icon highlight, for 2–4 spots per user. Adoption is now measured against trips where the service is actually useful.",
@@ -147,16 +147,18 @@ function Index() {
                     <p className="mt-1 text-sm text-muted-foreground">{c.m}</p>
                   </div>
                 </div>
-                <figure className={`mt-8 overflow-hidden rounded-sm border border-border ${c.mat}`}>
-                  <img src={c.img} alt={c.alt} loading="lazy" className={`${c.ar} w-full object-cover ${c.wrap}`} />
-                </figure>
-                <div className="mt-8 grid gap-8 md:grid-cols-3">
-                  {[["Problem", c.p], ["What I did", c.d], ["Result", c.r]].map(([h, b]) => (
-                    <div key={h}>
-                      <h4 className={`font-mono text-xs uppercase tracking-widest ${h === "Result" ? "text-accent" : "text-muted-foreground"}`}>{h}</h4>
-                      <p className={`mt-3 text-sm leading-relaxed ${h === "Result" ? "font-medium" : ""}`}>{b}</p>
-                    </div>
-                  ))}
+                <div className={i === 0 ? "mt-8 grid items-start gap-8 md:grid-cols-[minmax(0,364px)_minmax(0,1fr)]" : "mt-8"}>
+                  <figure className={`overflow-hidden rounded-sm border border-border ${i === 0 ? "mx-auto w-full max-w-[364px]" : ""} ${c.mat}`}>
+                    <img src={c.img} alt={c.alt} loading="lazy" className={`${c.ar} w-full object-cover ${c.wrap}`} />
+                  </figure>
+                  <div className={i === 0 ? "grid gap-6" : "mt-8 grid gap-8 md:grid-cols-3"}>
+                    {[["Problem", c.p], ["What I did", c.d], ["Result", c.r]].map(([h, b]) => (
+                      <div key={h}>
+                        <h4 className={`font-mono text-xs uppercase tracking-widest ${h === "Result" ? "text-accent" : "text-muted-foreground"}`}>{h}</h4>
+                        <p className={`mt-3 text-sm leading-relaxed ${h === "Result" ? "font-medium" : ""}`}>{b}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </article>
             ))}
