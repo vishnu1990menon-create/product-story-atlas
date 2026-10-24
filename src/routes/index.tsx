@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import needBasedAdoption from "../assets/need-based-adoption.webp.asset.json";
 import photoUpload from "../assets/guard360-photo-upload.webp.asset.json";
 import parkingAnalytics from "../assets/parking-analytics.webp.asset.json";
 import atherCharging from "../assets/ather-charging.webp.asset.json";
-import parkopediaMercedes from "../assets/parkopedia-mercedes.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -82,8 +82,16 @@ type Career = {
   d: string;
   b: string;
   link?: { label: string; href: string };
-  img?: string;
-  imgAlt?: string;
+  projects?: Project[];
+};
+
+type Project = {
+  t: string;
+  href: string;
+  img: string;
+  alt: string;
+  panelImg?: boolean;
+  play?: boolean;
 };
 
 const career: Career[] = [
@@ -95,8 +103,34 @@ const career: Career[] = [
       label: "Parking for Navigation and Payments",
       href: "https://business.parkopedia.com/solutions/mercedes-in-car-integrations",
     },
-    img: parkopediaMercedes.url,
-    imgAlt: "Mercedes-Benz A-Class parked on a city street in China, from Parkopedia's Mercedes-Benz in-car integration showcase",
+    projects: [
+      {
+        t: "Parking for Navigation and Payments",
+        href: "https://business.parkopedia.com",
+        img: "https://business.parkopedia.com/hubfs/Payments%20Platform/Payments-Platform-Parking-image-480x229px.png",
+        alt: "Mercedes-Benz with the in-car parking payment flow on its display, from Parkopedia's payments platform",
+        panelImg: true,
+      },
+      {
+        t: "AMG Experience: B2B and B2C portal",
+        href: "https://experience.mercedes-amg.com/en/events/all-amg-experience-events",
+        img: "https://api.microlink.io/?url=https%3A%2F%2Fexperience.mercedes-amg.com%2Fen%2Fevents%2Fall-amg-experience-events&screenshot=true&meta=false&embed=screenshot.url",
+        alt: "Screenshot of the AMG Experience events portal listing all AMG experience events",
+      },
+      {
+        t: "Collision detection and vehicle snapshot",
+        href: "https://www.youtube.com/watch?v=UjYlGlI-YeY",
+        img: "https://img.youtube.com/vi/UjYlGlI-YeY/hqdefault.jpg",
+        alt: "Video thumbnail: Mercedes-Benz collision detection capturing and uploading a vehicle damage snapshot",
+        play: true,
+      },
+      {
+        t: "Emergency key deactivation",
+        href: "https://www.mercedes-benz.com.au/passengercars/services/mercedes-me/digital-extras/guard360.html",
+        img: "https://api.microlink.io/?url=https%3A%2F%2Fwww.mercedes-benz.com.au%2Fpassengercars%2Fservices%2Fmercedes-me%2Fdigital-extras%2Fguard360.html&screenshot=true&meta=false&embed=screenshot.url",
+        alt: "Screenshot of the Mercedes-Benz Guard360 digital extras page showing emergency key deactivation",
+      },
+    ],
   },
   {
     r: "Product Owner, Grid 2.0, Ather Energy",
@@ -230,15 +264,12 @@ function Index() {
                   <p className="text-muted-foreground">
                     <CareerBody c={c} />
                   </p>
-                  {c.img && (
-                    <a
-                      href={c.link?.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="block w-full max-w-[300px] overflow-hidden rounded-sm border border-border"
-                    >
-                      <img src={c.img} alt={c.imgAlt} loading="lazy" className="aspect-[3/2] w-full object-cover" />
-                    </a>
+                  {c.projects && (
+                    <div className="grid gap-5 md:grid-cols-2">
+                      {c.projects.map((p) => (
+                        <ProjectCard key={p.t} p={p} />
+                      ))}
+                    </div>
                   )}
                 </div>
               </li>
