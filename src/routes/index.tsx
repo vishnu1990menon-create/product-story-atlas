@@ -237,7 +237,7 @@ function Index() {
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 border-b border-border bg-background/85 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#top" className="font-display text-lg font-semibold">Vishnu Menon</a>
+          <a href="#top" className="font-display text-xl font-semibold">Vishnu Menon</a>
           <div className="hidden gap-8 text-sm text-muted-foreground sm:flex">
             {[["work", "Case studies"], ["path", "Career"], ["skills", "Skills"], ["contact", "Contact"]].map(([id, l]) => (
               <a key={id} href={`#${id}`} className="transition-colors hover:text-accent">{l}</a>
