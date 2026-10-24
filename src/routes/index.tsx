@@ -3,6 +3,7 @@ import needBasedAdoption from "../assets/need-based-adoption.webp.asset.json";
 import photoUpload from "../assets/guard360-photo-upload.webp.asset.json";
 import parkingAnalytics from "../assets/parking-analytics.webp.asset.json";
 import atherCharging from "../assets/ather-charging.webp.asset.json";
+import parkopediaMercedes from "../assets/parkopedia-mercedes.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -76,12 +77,62 @@ const cases = [
   },
 ];
 
-const career = [
-  ["Product Manager, Mercedes-Benz R&D", "2022 – present · Bangalore", "Guard360 cluster lead and Parking for Navigation. Release management, AI/LLM-driven support tooling, and cross-market regulatory compliance (EU Data Act, PSD2, DSA)."],
-  ["Product Owner, Grid 2.0, Ather Energy", "2019 – 2022", "Drive Control Program Manager, then Grid 2.0 Product Owner. Also Scrum Master on the Gen 2 dashboard and part of the Scrum-to-SAFe move for a 50+ engineer organization."],
-  ["Program Manager, Tessolve Semiconductors", "2017 – 2019", "Post-silicon validation, wafer-out test and packaging programs for TI and Intel, with 85% on-time delivery."],
-  ["Test Lead and NPI Lead, Kaynes Technology", "2014 – 2017", "Evaluation and development kits for Cypress Semiconductor, and new product introduction."],
+type Career = {
+  r: string;
+  d: string;
+  b: string;
+  link?: { label: string; href: string };
+  img?: string;
+  imgAlt?: string;
+};
+
+const career: Career[] = [
+  {
+    r: "Product Manager, Mercedes-Benz R&D",
+    d: "2022 – present · Bangalore",
+    b: "Guard360 cluster lead and Parking for Navigation and Payments. Release management, AI/LLM-driven support tooling, and cross-market regulatory compliance (EU Data Act, PSD2, DSA).",
+    link: {
+      label: "Parking for Navigation and Payments",
+      href: "https://business.parkopedia.com/solutions/mercedes-in-car-integrations",
+    },
+    img: parkopediaMercedes.url,
+    imgAlt: "Mercedes-Benz A-Class parked on a city street in China, from Parkopedia's Mercedes-Benz in-car integration showcase",
+  },
+  {
+    r: "Product Owner, Grid 2.0, Ather Energy",
+    d: "2019 – 2022",
+    b: "Drive Control Program Manager, then Grid 2.0 Product Owner. Also Scrum Master on the Gen 2 dashboard and part of the Scrum-to-SAFe move for a 50+ engineer organization.",
+  },
+  {
+    r: "Program Manager, Tessolve Semiconductors",
+    d: "2017 – 2019",
+    b: "Post-silicon validation, wafer-out test and packaging programs for TI and Intel, with 85% on-time delivery.",
+  },
+  {
+    r: "Test Lead and NPI Lead, Kaynes Technology",
+    d: "2014 – 2017",
+    b: "Evaluation and development kits for Cypress Semiconductor, and new product introduction.",
+  },
 ];
+
+function CareerBody({ c }: { c: Career }) {
+  if (!c.link) return <>{c.b}</>;
+  const [before, after] = c.b.split(c.link.label);
+  return (
+    <>
+      {before}
+      <a
+        href={c.link.href}
+        target="_blank"
+        rel="noreferrer"
+        className="underline decoration-accent decoration-2 underline-offset-4 transition-colors hover:text-accent"
+      >
+        {c.link.label}
+      </a>
+      {after}
+    </>
+  );
+}
 
 const skills: [string, string[]][] = [
   ["Strengths", ["Stakeholder orchestration", "End-to-end ownership", "Release management", "Regulatory compliance", "Funnel and cohort analytics", "Embedded to cloud"]],
@@ -169,13 +220,27 @@ function Index() {
           <Label n="02">Career</Label>
           <h2 className="mt-4 font-display text-3xl md:text-4xl">Hardware roots, platform and AI product ownership today.</h2>
           <ol className="mt-12">
-            {career.map(([r, d, b]) => (
-              <li key={r} className="grid gap-2 border-t border-border py-8 md:grid-cols-[1fr_2fr]">
+            {career.map((c) => (
+              <li key={c.r} className="grid gap-2 border-t border-border py-8 md:grid-cols-[1fr_2fr]">
                 <div>
-                  <p className="font-semibold">{r}</p>
-                  <p className="mt-1 font-mono text-xs text-muted-foreground">{d}</p>
+                  <p className="font-semibold">{c.r}</p>
+                  <p className="mt-1 font-mono text-xs text-muted-foreground">{c.d}</p>
                 </div>
-                <p className="text-muted-foreground">{b}</p>
+                <div className="grid gap-5">
+                  <p className="text-muted-foreground">
+                    <CareerBody c={c} />
+                  </p>
+                  {c.img && (
+                    <a
+                      href={c.link?.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="block w-full max-w-[300px] overflow-hidden rounded-sm border border-border"
+                    >
+                      <img src={c.img} alt={c.imgAlt} loading="lazy" className="aspect-[3/2] w-full object-cover" />
+                    </a>
+                  )}
+                </div>
               </li>
             ))}
           </ol>
