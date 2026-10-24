@@ -220,13 +220,27 @@ function Index() {
           <Label n="02">Career</Label>
           <h2 className="mt-4 font-display text-3xl md:text-4xl">Hardware roots, platform and AI product ownership today.</h2>
           <ol className="mt-12">
-            {career.map(([r, d, b]) => (
-              <li key={r} className="grid gap-2 border-t border-border py-8 md:grid-cols-[1fr_2fr]">
+            {career.map((c) => (
+              <li key={c.r} className="grid gap-2 border-t border-border py-8 md:grid-cols-[1fr_2fr]">
                 <div>
-                  <p className="font-semibold">{r}</p>
-                  <p className="mt-1 font-mono text-xs text-muted-foreground">{d}</p>
+                  <p className="font-semibold">{c.r}</p>
+                  <p className="mt-1 font-mono text-xs text-muted-foreground">{c.d}</p>
                 </div>
-                <p className="text-muted-foreground">{b}</p>
+                <div className="grid gap-5">
+                  <p className="text-muted-foreground">
+                    <CareerBody c={c} />
+                  </p>
+                  {c.img && (
+                    <a
+                      href={c.link?.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="block w-full max-w-[300px] overflow-hidden rounded-sm border border-border"
+                    >
+                      <img src={c.img} alt={c.imgAlt} loading="lazy" className="aspect-[3/2] w-full object-cover" />
+                    </a>
+                  )}
+                </div>
               </li>
             ))}
           </ol>
