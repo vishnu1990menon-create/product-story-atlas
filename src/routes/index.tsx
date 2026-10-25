@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import needBasedAdoption from "../assets/need-based-adoption.webp.asset.json";
-import photoUpload from "../assets/guard360-collision.png";
-import parkingAnalytics from "../assets/parking-analytics-case.png";
-import atherCharging from "../assets/ather-charging-case.png";
+import needBasedAdoption from "../assets/need-based-adoption-updated.png";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
+import { guard360Metrics } from "@/lib/portfolio-metrics";
+import photoUpload from "../assets/guard360-photo-upload.webp.asset.json";
+import parkingAnalytics from "../assets/parking-analytics.webp.asset.json";
+import atherCharging from "../assets/ather-charging.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,57 +26,74 @@ const stats = [
   ["100K+", "Guard360 users across 20+ markets"],
   ["~500 → 5,000", "EV charging locations in 18 months"],
   ["USD 5M", "annual savings, Ather Drive Control"],
-  ["2 × 40%", "Guard360 complaints and manual effort cut"],
+  [`${guard360Metrics.fewerComplaintsPercent}%`, "fewer Guard360 complaints"],
+  [`${guard360Metrics.lessManualTriagePercent}%`, "less manual triage effort"],
 ];
 
 const cases = [
   {
-    t: "Guard360: measuring adoption against real need, not the whole fleet",
-    m: "Mercedes-Benz · Cluster lead",
-    img: needBasedAdoption.url,
+    t: "Parking for Navigation: measuring adoption against real need",
+    m: "Product Manager, Mercedes-Benz R&D",
+    img: needBasedAdoption,
     ar: "aspect-[19/16]",
     mat: "bg-muted/50 p-3",
-    wrap: "mx-auto max-w-[340px] ring-1 ring-border",
-    alt: "Infographic: 80% of trips are routine repeats that need no prompt, notifications cut by 60%, conversion up from 10% to about 25%, and prompts stepping down from full notification to silent notification to an icon glow",
-    p: "Adoption looked low because most users had no need for the feature most of the time. Measuring against real need cut notifications by 60% and made them far more relevant.",
-    d: "We segmented users by vehicle age, user age, powertrain and usage depth, and found low engagement across all of them. Digging into trip data showed that about 80% of trips were repeats to the same places, such as home and work, where the service was never needed. The usage rate was therefore measured against the wrong base. We identified each user’s regular destinations from weekly trip counts and stored them on the vehicle profile. Prompts at those places were then stepped down, from full notification to silent notification to a passive icon highlight, for 2–4 spots per user. Adoption is now measured against trips where the service is actually useful.",
-    r: "60% fewer notifications and conversion up from 10% to ~25%, at a modest compute cost that we accepted while a cheaper method was developed.",
+    wrap: "mx-auto max-w-[340px] ring-1 ring-border object-contain",
+    alt: "Parking adoption infographic: 80% routine trips, 60% fewer notifications, conversion up from 10%, and prompts stepping down at familiar places",
+    p: "About 80% of trips were repeats to the same places (home, work), where parking payment was never needed, so adoption was being measured against the wrong base.",
+    d: [
+      "Identified each user’s regular destinations from weekly trip counts and stored them on the vehicle profile.",
+      "Stepped prompts down at those places, from full notification to silent notification to a passive icon highlight, for 2–4 spots per user.",
+      "Accepted a modest compute cost while a cheaper method was developed.",
+    ],
+    r: "60% fewer notifications, more relevant prompts, and conversion up from 10%.",
   },
   {
-    t: "Guard360: fixing “pictures not taken” with ticket analysis and LLMs",
-    m: "Mercedes-Benz · Cluster lead",
-    img: photoUpload,
+    t: "Guard360: fixing “pictures not taken”",
+    m: "Cluster lead, Guard360",
+    img: photoUpload.url,
     ar: "aspect-[10/7]",
     mat: "bg-muted/30 p-2",
     wrap: "mx-auto max-h-[460px] object-contain",
-    alt: "Mercedes-Benz Guard360 mobile app interface displaying anti-theft collision detection with impact zone localized to the front left door",
+    alt: "Uploaded Guard360 vehicle photo capture and upload workflow",
     p: "Customers reported missing collision pictures even with the service activated.",
-    d: "Sorted support tickets into three failure buckets (not captured, captured but not stored, stored but not uploaded), and matched them to a visit-to-picture funnel. Shipped fixes per bucket: linked the onboard toggle to service activation, added an activation-screen disclaimer, and ran proactive notification campaigns by head-unit generation. Built an ML-driven engagement workflow and a RAG/LLM ticket-analysis workflow.",
-    r: "40% fewer complaints from the ML-driven workflow, and 40% less manual triage effort from RAG/LLM analysis.",
+    d: [
+      "Mapped the funnel from Leaf Page to command delivery to image capture, and sorted tickets into three failure buckets: not captured, captured but not stored, stored but not uploaded.",
+      "Linked the onboard toggle to service activation, added an activation-screen disclaimer, and ran proactive campaigns by head-unit generation across 20+ markets.",
+      "Built a RAG/LLM ticket-triage workflow so support could scale across markets.",
+    ],
+    r: `${guard360Metrics.fewerComplaintsPercent}% fewer related complaints and ${guard360Metrics.lessManualTriagePercent}% less manual triage effort.`,
   },
   {
-    t: "Parking for Navigation: growth, plateau and a deliberate sundown",
-    m: "Mercedes-Benz · Product Manager",
-    img: parkingAnalytics,
+    t: "Parking for Navigation and Payments: growth, plateau, sundown",
+    m: "Product Manager",
+    img: parkingAnalytics.url,
     ar: "aspect-[5/4] md:aspect-[16/10]",
     mat: "bg-card p-2",
     wrap: "mx-auto max-h-[500px] object-contain",
-    alt: "Mercedes-Benz in-car parking payment screen, companion mobile app, and transaction growth chart showing expansion from 1x to 12x plateau and subsequent reset",
+    alt: "Uploaded parking transaction analytics and growth chart",
     p: "After market expansion, monthly parking transactions sat flat for a long time.",
-    d: "Built the funnel, daily trackers and location heat maps. They showed users tapping the start-parking notification but not completing, and little repeat use or repeat location. Redesigned onboarding, then expanded deeper within markets by adopting municipality-level rules on the existing UX flow.",
-    r: "3–4x transaction growth and a 1.7x onboarding conversion improvement. Legal and compliance constraints later capped growth, and the product was wound down. Lessons from that reset are in the full case study.",
+    d: [
+      "Redesigned the in-car parking experience using user studies, scenario mapping and competitive benchmarking, and worked with content providers on partner SLAs.",
+      "Used funnels, daily trackers and heat maps to find onboarding and payment friction, then redesigned the flows.",
+      "Ran the Digital Services Act and PSD2 work across legal, engineering and business for a multi-market European rollout, and went deeper within markets using municipality-level rules.",
+    ],
+    r: "Transactions peaked at 12x launch levels, MAU +30%, €1.5M cost savings and ~€500K projected revenue from head-unit monetization. Legal and compliance constraints then capped growth, and the product was wound down.",
   },
   {
-    t: "Ather Energy: Grid charging network, neighborhood charger & interoperability",
-    m: "Ather Energy · Program Manager, then Product Owner",
-    img: atherCharging,
+    t: "Ather Energy: Drive controller and neighborhood charging",
+    m: "Program Manager, then Product Owner, Grid 2.0",
+    img: atherCharging.url,
     ar: "aspect-[2/1]",
-    mat: "bg-[#0b0c0e] p-2",
+    mat: "bg-muted p-2",
     wrap: "mx-auto max-h-[440px] object-contain",
-    alt: "Ather Grid generation-2 neighborhood charger hardware, companion mobile app, and Ather-Vida public charger interoperability",
-    p: "Scale public charging infrastructure and neighborhood charging while ensuring interoperability across ecosystem partners.",
-    d: "Led next-generation public charger development and network expansion by aligning engineering, manufacturing, operations, and business teams. Managed product requirements across charging hardware, connectivity systems, cloud services, and third-party enabling interoperability integrations. Led design and prototyping of the 1st-generation neighborhood charger, coordinating design, manufacturing, field operations, and third-party providers to deliver a robust, scalable product offering.",
-    r: "USD 5M annual cost savings, 10–15% higher throughput through streamlined workflows, and the charging network grown from ~500 to ~5,000 locations in 18 months.",
+    alt: "Uploaded Ather charging network, neighborhood charger and charging hardware photographs",
+    p: "Scale a hardware-heavy product and a public charging network while keeping cost down.",
+    d: [
+      "Led the Drive Controller from POC to production, benchmarking competitor specs and building the roadmap behind the cost model and business case.",
+      "Drove validation, production readiness and release planning across firmware, hardware, mechanical and supply chain.",
+      "Led new-generation public charger development and first-generation neighborhood charger design, aligning engineering, manufacturing, operations, field teams and third-party providers.",
+    ],
+    r: "~USD 5M annual cost savings and on-time delivery.",
   },
 ];
 
@@ -81,12 +101,15 @@ type Career = {
   r: string;
   d: string;
   b: string;
+  metric?: string;
+  subprojects?: string[];
   link?: { label: string; href: string };
   projects?: Project[];
 };
 
 type Project = {
   t: string;
+  outcome: string;
   href: string;
   img: string;
   alt: string;
@@ -103,22 +126,26 @@ const career: Career[] = [
       label: "Parking for Navigation and Payments",
       href: "https://business.parkopedia.com/solutions/mercedes-in-car-integrations",
     },
+    subprojects: ["Parking for Navigation and Payments", "Guard360 and Vehicle Snapshots"],
     projects: [
       {
         t: "Parking for Navigation and Payments",
+        outcome: "Transactions up to 12x, MAU +30%.",
         href: "https://business.parkopedia.com",
         img: "https://business.parkopedia.com/hubfs/Payments%20Platform/Payments-Platform-Parking-image-480x229px.png",
         alt: "Mercedes-Benz with the in-car parking payment flow on its display, from Parkopedia's payments platform",
         panelImg: true,
       },
       {
-        t: "AMG Experience: B2B and B2C portal",
+        t: "AMG Experience portal",
+        outcome: "Product Owner, AMG Track Pace and Experience webpage: redesign, optimization, launch.",
         href: "https://experience.mercedes-amg.com/en/events/all-amg-experience-events",
         img: "https://api.microlink.io/?url=https%3A%2F%2Fexperience.mercedes-amg.com%2Fen%2Fevents%2Fall-amg-experience-events&screenshot=true&meta=false&embed=screenshot.url",
         alt: "Screenshot of the AMG Experience events portal listing all AMG experience events",
       },
       {
         t: "Collision detection and vehicle snapshot",
+        outcome: `Funnel fixes cut complaints by ${guard360Metrics.fewerComplaintsPercent}%.`,
         href: "https://www.youtube.com/watch?v=UjYlGlI-YeY",
         img: "https://img.youtube.com/vi/UjYlGlI-YeY/hqdefault.jpg",
         alt: "Video thumbnail: Mercedes-Benz collision detection capturing and uploading a vehicle damage snapshot",
@@ -126,6 +153,7 @@ const career: Career[] = [
       },
       {
         t: "Emergency key deactivation",
+        outcome: "Integration, optimization and expansion.",
         href: "https://www.mercedes-benz.com.au/passengercars/services/mercedes-me/digital-extras/guard360.html",
         img: "https://api.microlink.io/?url=https%3A%2F%2Fwww.mercedes-benz.com.au%2Fpassengercars%2Fservices%2Fmercedes-me%2Fdigital-extras%2Fguard360.html&screenshot=true&meta=false&embed=screenshot.url",
         alt: "Screenshot of the Mercedes-Benz Guard360 digital extras page showing emergency key deactivation",
@@ -133,18 +161,21 @@ const career: Career[] = [
     ],
   },
   {
-    r: "Product Owner, Grid 2.0, Ather Energy",
+    r: "Program Manager → Product Owner, Ather Energy",
     d: "2019 – 2022",
+    metric: "~USD 5M annual savings · ~500 → 5,000 charging locations in 18 months",
     b: "Drive Control Program Manager, then Grid 2.0 Product Owner. Also Scrum Master on the Gen 2 dashboard and part of the Scrum-to-SAFe move for a 50+ engineer organization.",
   },
   {
     r: "Program Manager, Tessolve Semiconductors",
     d: "2017 – 2019",
+    metric: "85% on-time delivery",
     b: "Post-silicon validation, wafer-out test and packaging programs for TI and Intel, with 85% on-time delivery.",
   },
   {
     r: "Test Lead and NPI Lead, Kaynes Technology",
     d: "2014 – 2017",
+    metric: "Evaluation and development kits · New product introduction",
     b: "Evaluation and development kits for Cypress Semiconductor, and new product introduction.",
   },
 ];
@@ -213,7 +244,13 @@ function ProjectCard({ p }: { p: Project }) {
           )}
         </div>
       )}
-      <p className="p-3 text-sm font-medium">{p.t}</p>
+      <div className="p-3">
+        <p className="flex min-w-0 items-start justify-between gap-2 text-sm font-medium">
+          <span className="min-w-0 truncate" title={p.t}>{p.t}</span>
+          <ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0 text-accent" />
+        </p>
+        <p className="mt-1 truncate text-xs text-muted-foreground" title={p.outcome}>{p.outcome}</p>
+      </div>
     </a>
   );
 }
@@ -249,27 +286,21 @@ function Index() {
       <main id="top" className="mx-auto max-w-6xl px-6">
         <section className="pt-28 pb-20 md:pt-36 md:pb-32">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Product Manager · Connected Mobility · Bangalore</p>
-          <h1 className="mt-8 max-w-4xl font-display text-4xl leading-[1.08] md:text-6xl">
-            I take complex embedded and connected products from first prototype to <em className="text-accent">scaled, regulated launch.</em>
+          <h1 className="mt-14 max-w-4xl font-display text-4xl leading-[1.08] md:text-6xl">
+            I lead Guard360 at Mercedes-Benz R&D and previously led Parking for Navigation, taking complex embedded and connected products from first prototype to <em className="text-accent">scaled, regulated launch.</em>
           </h1>
           <p className="mt-8 max-w-2xl text-lg text-muted-foreground">
-            12+ years across semiconductors, EVs and connected vehicles. Today I lead Guard360 at Mercedes-Benz R&D and previously led Parking for Navigation, with a bias for measurable outcomes and honest post-mortems.
+            12+ years across semiconductors, EVs and connected vehicles, with a bias for measurable outcomes and honest post-mortems.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <a
-              href="#work"
-              className="inline-flex items-center justify-center rounded-sm bg-foreground px-6 py-3 text-sm font-semibold text-background shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground"
-            >
-              Read case studies
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center justify-center rounded-sm border border-border bg-background px-6 py-3 text-sm font-medium text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
-            >
-              Get in touch
-            </a>
+            <Button asChild className="h-auto rounded-sm px-6 py-3 font-semibold hover:bg-accent hover:text-accent-foreground">
+              <a href="#work">Read case studies</a>
+            </Button>
+            <Button asChild variant="outline" className="h-auto rounded-sm px-6 py-3 text-muted-foreground">
+              <a href="#contact">Get in touch</a>
+            </Button>
           </div>
-          <dl className="mt-20 grid grid-cols-2 border-t border-border md:grid-cols-4">
+          <dl className="mt-20 grid grid-cols-2 border-t border-border md:grid-cols-5">
             {stats.map(([v, l]) => (
               <div key={v} className="border-b border-border py-6 pr-4 md:border-b-0">
                 <dt className="font-display text-3xl md:text-4xl">{v}</dt>
@@ -297,11 +328,21 @@ function Index() {
                     <img src={c.img} alt={c.alt} loading="lazy" className={`${c.ar} w-full ${c.wrap ? c.wrap : "object-cover"}`} />
                   </figure>
                   <div className={i === 0 ? "grid gap-6" : "mt-8 grid gap-8 md:grid-cols-3"}>
-                    {[["Problem", c.p], ["What I did", c.d], ["Result", c.r]].map(([h, b]) => (
-                      <div key={h}>
-                        <h4 className={`font-mono text-xs uppercase tracking-widest ${h === "Result" ? "text-accent" : "text-muted-foreground"}`}>{h}</h4>
-                        <p className={`mt-3 text-sm leading-relaxed ${h === "Result" ? "font-medium" : ""}`}>{b}</p>
-                      </div>
+                    <div>
+                      <h4 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Problem</h4>
+                      <p className="mt-3 text-sm leading-relaxed">{c.p}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">What I did</h4>
+                      <ul className="mt-3 list-disc space-y-3 pl-4 text-sm leading-relaxed marker:text-accent">
+                        {c.d.map((action) => <li key={action}>{action}</li>)}
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-mono text-xs uppercase tracking-widest text-accent">Result</h4>
+                      <p className="mt-3 text-sm font-medium leading-relaxed">{c.r}</p>
+                    </div>
+                  </div>
                     ))}
                   </div>
                 </div>
