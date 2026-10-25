@@ -253,7 +253,7 @@ function Index() {
             I take complex embedded and connected products from first prototype to <em className="text-accent">scaled, regulated launch.</em>
           </h1>
           <p className="mt-8 max-w-2xl text-lg text-muted-foreground">
-            12+ years across semiconductors, EVs and connected vehicles. Today I lead Guard360 and Parking for Navigation at Mercedes-Benz R&D, with a bias for measurable outcomes and honest post-mortems.
+            12+ years across semiconductors, EVs and connected vehicles. Today I lead Guard360 at Mercedes-Benz R&D and previously led Parking for Navigation, with a bias for measurable outcomes and honest post-mortems.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <a href="#work" className="rounded-sm bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-accent">Read case studies</a>
