@@ -343,8 +343,6 @@ function Index() {
                       <p className="mt-3 text-sm font-medium leading-relaxed">{c.r}</p>
                     </div>
                   </div>
-                    ))}
-                  </div>
                 </div>
               </article>
             ))}
