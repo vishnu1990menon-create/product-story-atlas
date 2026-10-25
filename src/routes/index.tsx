@@ -12,11 +12,31 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Vishnu Menon — Product Manager, Connected Mobility" },
-      { name: "description", content: "Product Manager at Mercedes-Benz R&D. 12+ years taking embedded and connected products from prototype to scaled, regulated launch." },
+      {
+        name: "description",
+        content:
+          "Product Manager at Mercedes-Benz R&D. 12+ years taking embedded and connected products from prototype to scaled, regulated launch.",
+      },
       { property: "og:title", content: "Vishnu Menon — Product Manager, Connected Mobility" },
-      { property: "og:description", content: "Case studies across Mercedes-Benz, Ather Energy and semiconductors." },
+      {
+        property: "og:description",
+        content: "Case studies across Mercedes-Benz, Ather Energy and semiconductors.",
+      },
       { property: "og:type", content: "website" },
+      {
+        property: "og:image",
+        content: "/__l5e/assets-v1/265a0314-c11b-4fce-b61c-b345858b4a94/parking-analytics.webp",
+      },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Vishnu Menon — Product Manager, Connected Mobility" },
+      {
+        name: "twitter:description",
+        content: "Case studies across Mercedes-Benz, Ather Energy and semiconductors.",
+      },
+      {
+        name: "twitter:image",
+        content: "/__l5e/assets-v1/265a0314-c11b-4fce-b61c-b345858b4a94/parking-analytics.webp",
+      },
     ],
   }),
   component: Index,
@@ -67,6 +87,8 @@ const cases = [
     t: "Parking for Navigation and Payments: growth, plateau, sundown",
     m: "Product Manager",
     img: parkingAnalytics.url,
+    caption:
+      "Transactions indexed to launch (1x). 12x = peak total; the plateau and drop followed legal and compliance roadblocks.",
     ar: "aspect-[5/4] md:aspect-[16/10]",
     mat: "bg-card p-2",
     wrap: "mx-auto max-h-[500px] object-contain",
@@ -95,14 +117,32 @@ const cases = [
     ],
     r: "~USD 5M annual cost savings and on-time delivery.",
   },
+  {
+    t: "Guard360: collision detection delivered 6 weeks early",
+    m: "Cluster lead, Guard360",
+    p: "Collision detection needed vehicle firmware (12 weeks) and cloud backend (8 weeks) sequenced, resulting in a 20-week launch path across 20+ markets.",
+    d: [
+      "Firmware (12 weeks) and backend (8 weeks) sequenced originally meant a 20-week launch across 20+ markets.",
+      "Decoupled teams using a vehicle mock system and a single mock contract as the source of truth.",
+      "Backend development started in week 1 with a weekly sync to keep both sides aligned.",
+    ],
+    r: "Delivered in 14 weeks instead of 20, with zero integration surprises. The mock pattern was subsequently standardized across other vehicle services.",
+  },
 ];
+
+type SubProject = {
+  title: string;
+  desc: string;
+  metric: string;
+  link?: { label: string; href: string };
+};
 
 type Career = {
   r: string;
   d: string;
   b: string;
   metric?: string;
-  subprojects?: string[];
+  subprojects?: SubProject[];
   link?: { label: string; href: string };
   projects?: Project[];
 };
@@ -126,7 +166,22 @@ const career: Career[] = [
       label: "Parking for Navigation and Payments",
       href: "https://business.parkopedia.com/solutions/mercedes-in-car-integrations",
     },
-    subprojects: ["Parking for Navigation and Payments", "Guard360 and Vehicle Snapshots"],
+    subprojects: [
+      {
+        title: "Parking for Navigation and Payments (wound down)",
+        desc: "Redesigned the in-car parking experience and led DSA and PSD2 compliance for a multi-market European rollout.",
+        metric: "MAU +30%, transactions up to 12x",
+        link: {
+          label: "Parking for Navigation and Payments (wound down)",
+          href: "https://business.parkopedia.com/solutions/mercedes-in-car-integrations",
+        },
+      },
+      {
+        title: "Guard360 and Vehicle Snapshots",
+        desc: "Owned roadmap and lifecycle for a connected IoT ecosystem (sensors, TCUs, cloud, mobile and HMI).",
+        metric: "Complaints -50%, RAG/LLM triage -40% manual effort",
+      },
+    ],
     projects: [
       {
         t: "Parking for Navigation and Payments",
@@ -137,8 +192,8 @@ const career: Career[] = [
         panelImg: true,
       },
       {
-        t: "AMG Experience portal",
-        outcome: "Product Owner, AMG Track Pace and Experience webpage: redesign, optimization, launch.",
+        t: "Product Owner, AMG Track Pace and Experience webpage: redesign, optimization, launch.",
+        outcome: "Redesign, optimization and global launch.",
         href: "https://experience.mercedes-amg.com/en/events/all-amg-experience-events",
         img: "https://api.microlink.io/?url=https%3A%2F%2Fexperience.mercedes-amg.com%2Fen%2Fevents%2Fall-amg-experience-events&screenshot=true&meta=false&embed=screenshot.url",
         alt: "Screenshot of the AMG Experience events portal listing all AMG experience events",
@@ -170,12 +225,11 @@ const career: Career[] = [
     r: "Program Manager, Tessolve Semiconductors",
     d: "2017 – 2019",
     metric: "85% on-time delivery",
-    b: "Post-silicon validation, wafer-out test and packaging programs for TI and Intel, with 85% on-time delivery.",
+    b: "Post-silicon validation, wafer-out test and packaging programs for TI and Intel.",
   },
   {
     r: "Test Lead and NPI Lead, Kaynes Technology",
     d: "2014 – 2017",
-    metric: "Evaluation and development kits · New product introduction",
     b: "Evaluation and development kits for Cypress Semiconductor, and new product introduction.",
   },
 ];
@@ -246,19 +300,39 @@ function ProjectCard({ p }: { p: Project }) {
       )}
       <div className="p-3">
         <p className="flex min-w-0 items-start justify-between gap-2 text-sm font-medium">
-          <span className="min-w-0 truncate" title={p.t}>{p.t}</span>
+          <span className="line-clamp-2 leading-snug" title={p.t}>
+            {p.t}
+          </span>
           <ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0 text-accent" />
         </p>
-        <p className="mt-1 truncate text-xs text-muted-foreground" title={p.outcome}>{p.outcome}</p>
+        <p className="mt-1 line-clamp-1 text-xs text-muted-foreground" title={p.outcome}>
+          {p.outcome}
+        </p>
       </div>
     </a>
   );
 }
 
 const skills: [string, string[]][] = [
-  ["Strengths", ["Stakeholder orchestration", "End-to-end ownership", "Release management", "Regulatory compliance", "Funnel and cohort analytics", "Embedded to cloud"]],
-  ["AI and tools", ["RAG pipelines", "Azure AI Foundry", "LLM prompting", "n8n", "Claude API and MCP", "SQL"]],
-  ["Certifications", ["AWS Certified AI Practitioner", "AWS Cloud Practitioner", "SAFe PM/PO", "Design Thinking"]],
+  [
+    "Strengths",
+    [
+      "Stakeholder orchestration",
+      "End-to-end ownership",
+      "Release management",
+      "Regulatory compliance",
+      "Funnel and cohort analytics",
+      "Embedded to cloud",
+    ],
+  ],
+  [
+    "AI and tools",
+    ["RAG pipelines", "Azure AI Foundry", "LLM prompting", "n8n", "Claude API and MCP", "SQL"],
+  ],
+  [
+    "Certifications",
+    ["AWS Certified AI Practitioner", "AWS Cloud Practitioner", "SAFe PM/PO", "Design Thinking"],
+  ],
 ];
 
 function Label({ n, children }: { n: string; children: string }) {
@@ -274,10 +348,19 @@ function Index() {
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 border-b border-border bg-background/85 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#top" className="font-display text-xl font-semibold text-blue-600">Vishnu Menon</a>
+          <a href="#top" className="font-display text-xl font-semibold text-blue-600">
+            Vishnu Menon
+          </a>
           <div className="hidden gap-8 text-sm text-muted-foreground sm:flex">
-            {[["work", "Case studies"], ["path", "Career"], ["skills", "Skills"], ["contact", "Contact"]].map(([id, l]) => (
-              <a key={id} href={`#${id}`} className="transition-colors hover:text-accent">{l}</a>
+            {[
+              ["work", "Case studies"],
+              ["path", "Career"],
+              ["skills", "Skills"],
+              ["contact", "Contact"],
+            ].map(([id, l]) => (
+              <a key={id} href={`#${id}`} className="transition-colors hover:text-accent">
+                {l}
+              </a>
             ))}
           </div>
         </nav>
@@ -285,25 +368,39 @@ function Index() {
 
       <main id="top" className="mx-auto max-w-6xl px-6">
         <section className="pt-28 pb-20 md:pt-36 md:pb-32">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Product Manager · Connected Mobility · Bangalore</p>
-          <h1 className="mt-14 max-w-4xl font-display text-4xl leading-[1.08] md:text-6xl">
-            I lead Guard360 at Mercedes-Benz R&D and previously led Parking for Navigation, taking complex embedded and connected products from first prototype to <em className="text-accent">scaled, regulated launch.</em>
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
+            Product Manager · Connected Mobility · Bangalore
+          </p>
+          <h1 className="pt-4 mt-8 max-w-4xl font-display text-[clamp(2rem,3.8vw,3.25rem)] leading-[1.12]">
+            I lead Guard360 at Mercedes-Benz R&D and previously led Parking for Navigation, taking
+            complex embedded and connected products from first prototype to{" "}
+            <em className="text-accent">scaled, regulated launch.</em>
           </h1>
           <p className="mt-8 max-w-2xl text-lg text-muted-foreground">
-            12+ years across semiconductors, EVs and connected vehicles, with a bias for measurable outcomes and honest post-mortems.
+            12+ years across semiconductors, EVs and connected vehicles, with a bias for measurable
+            outcomes and honest post-mortems.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Button asChild className="h-auto rounded-sm px-6 py-3 font-semibold hover:bg-accent hover:text-accent-foreground">
+            <Button
+              asChild
+              className="h-auto rounded-sm px-6 py-3 font-semibold hover:bg-accent hover:text-accent-foreground"
+            >
               <a href="#work">Read case studies</a>
             </Button>
-            <Button asChild variant="outline" className="h-auto rounded-sm px-6 py-3 text-muted-foreground">
+            <Button
+              asChild
+              variant="outline"
+              className="h-auto rounded-sm px-6 py-3 text-muted-foreground"
+            >
               <a href="#contact">Get in touch</a>
             </Button>
           </div>
-          <dl className="mt-20 grid grid-cols-2 border-t border-border md:grid-cols-5">
+          <dl className="mt-20 grid grid-cols-1 border-t border-border sm:grid-cols-2 lg:grid-cols-5">
             {stats.map(([v, l]) => (
-              <div key={v} className="border-b border-border py-6 pr-4 md:border-b-0">
-                <dt className="font-display text-3xl md:text-4xl">{v}</dt>
+              <div key={v} className="border-b border-border py-6 pr-4 sm:border-b-0">
+                <dt className="whitespace-nowrap font-display text-2xl sm:text-3xl lg:text-4xl">
+                  {v}
+                </dt>
                 <dd className="mt-2 text-sm text-muted-foreground">{l}</dd>
               </div>
             ))}
@@ -312,7 +409,9 @@ function Index() {
 
         <section id="work" className="scroll-mt-20 border-t border-border py-20">
           <Label n="01">Case studies</Label>
-          <p className="mt-4 max-w-xl text-muted-foreground">Selected work. Details are kept NDA-safe; full write-ups available on request.</p>
+          <p className="mt-4 max-w-xl text-muted-foreground">
+            Selected work. Details are kept NDA-safe; full write-ups available on request.
+          </p>
           <div className="mt-12 space-y-6">
             {cases.map((c, i) => (
               <article key={c.t} className="rounded-sm border border-border bg-card p-8 md:p-10">
@@ -323,27 +422,80 @@ function Index() {
                     <p className="mt-1 text-sm text-muted-foreground">{c.m}</p>
                   </div>
                 </div>
-                <div className={i === 0 ? "mt-8 grid items-start gap-8 md:grid-cols-[minmax(0,364px)_minmax(0,1fr)]" : "mt-8"}>
-                  <figure className={`overflow-hidden rounded-sm border border-border ${i === 0 ? "mx-auto w-full max-w-[364px]" : ""} ${c.mat}`}>
-                    <img src={c.img} alt={c.alt} loading="lazy" className={`${c.ar} w-full ${c.wrap ? c.wrap : "object-cover"}`} />
-                  </figure>
-                  <div className={i === 0 ? "grid gap-6" : "mt-8 grid gap-8 md:grid-cols-3"}>
+                {c.img ? (
+                  <div
+                    className={
+                      i === 0
+                        ? "mt-8 grid items-start gap-8 md:grid-cols-[minmax(0,364px)_minmax(0,1fr)]"
+                        : "mt-8"
+                    }
+                  >
+                    <figure
+                      className={`overflow-hidden rounded-sm border border-border ${i === 0 ? "mx-auto w-full max-w-[364px]" : ""} ${c.mat}`}
+                    >
+                      <img
+                        src={c.img}
+                        alt={c.alt}
+                        loading="lazy"
+                        className={`${c.ar} w-full ${c.wrap ? c.wrap : "object-cover"}`}
+                      />
+                      {c.caption && (
+                        <figcaption className="border-t border-border/60 bg-muted/30 p-2.5 text-center font-mono text-xs text-muted-foreground">
+                          {c.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                    <div className={i === 0 ? "grid gap-6" : "mt-8 grid gap-8 md:grid-cols-3"}>
+                      <div>
+                        <h4 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                          Problem
+                        </h4>
+                        <p className="mt-3 text-sm leading-relaxed">{c.p}</p>
+                      </div>
+                      <div>
+                        <h4 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                          What I did
+                        </h4>
+                        <ul className="mt-3 list-disc space-y-3 pl-4 text-sm leading-relaxed marker:text-accent">
+                          {c.d.map((action) => (
+                            <li key={action}>{action}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-mono text-xs uppercase tracking-widest text-accent">
+                          Result
+                        </h4>
+                        <p className="mt-3 text-sm font-medium leading-relaxed">{c.r}</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-8 grid gap-8 md:grid-cols-3">
                     <div>
-                      <h4 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Problem</h4>
+                      <h4 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                        Problem
+                      </h4>
                       <p className="mt-3 text-sm leading-relaxed">{c.p}</p>
                     </div>
                     <div>
-                      <h4 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">What I did</h4>
+                      <h4 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                        What I did
+                      </h4>
                       <ul className="mt-3 list-disc space-y-3 pl-4 text-sm leading-relaxed marker:text-accent">
-                        {c.d.map((action) => <li key={action}>{action}</li>)}
+                        {c.d.map((action) => (
+                          <li key={action}>{action}</li>
+                        ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-mono text-xs uppercase tracking-widest text-accent">Result</h4>
+                      <h4 className="font-mono text-xs uppercase tracking-widest text-accent">
+                        Result
+                      </h4>
                       <p className="mt-3 text-sm font-medium leading-relaxed">{c.r}</p>
                     </div>
                   </div>
-                </div>
+                )}
               </article>
             ))}
           </div>
@@ -351,10 +503,15 @@ function Index() {
 
         <section id="path" className="scroll-mt-20 border-t border-border py-20">
           <Label n="02">Career</Label>
-          <h2 className="mt-4 font-display text-3xl md:text-4xl">Hardware roots, platform and AI product ownership today.</h2>
+          <h2 className="mt-4 font-display text-3xl md:text-4xl">
+            Hardware roots, platform and AI product ownership today.
+          </h2>
           <ol className="mt-12">
             {career.map((c) => (
-              <li key={c.r} className="grid gap-2 border-t border-border py-8 md:grid-cols-[1fr_2fr]">
+              <li
+                key={c.r}
+                className="grid gap-2 border-t border-border py-8 md:grid-cols-[1fr_2fr]"
+              >
                 <div>
                   <p className="font-semibold">{c.r}</p>
                   <p className="mt-1 font-mono text-xs text-muted-foreground">{c.d}</p>
@@ -364,11 +521,34 @@ function Index() {
                     <CareerBody c={c} />
                   </p>
                   {c.subprojects && (
-                    <ul className="list-disc space-y-1 pl-4 text-sm marker:text-accent">
-                      {c.subprojects.map((project) => <li key={project}>{project}</li>)}
-                    </ul>
+                    <div className="space-y-4">
+                      {c.subprojects.map((sp) => (
+                        <div key={sp.title} className="rounded-xs border-l-2 border-accent/60 pl-3">
+                          <p className="font-medium text-foreground">
+                            {sp.link ? (
+                              <a
+                                href={sp.link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline decoration-accent decoration-2 underline-offset-4 transition-colors hover:text-accent"
+                              >
+                                {sp.title}
+                              </a>
+                            ) : (
+                              sp.title
+                            )}
+                          </p>
+                          <p className="mt-1 text-sm text-muted-foreground">{sp.desc}</p>
+                          <p className="mt-1.5 font-mono text-xs font-medium text-accent">
+                            {sp.metric}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   )}
-                  {c.metric && <p className="text-sm font-medium text-accent">{c.metric}</p>}
+                  {c.metric && (
+                    <p className="font-mono text-xs font-medium text-accent">{c.metric}</p>
+                  )}
                   {c.projects && (
                     <div className="grid gap-5 md:grid-cols-2">
                       {c.projects.map((p) => (
@@ -380,7 +560,9 @@ function Index() {
               </li>
             ))}
           </ol>
-          <p className="border-t border-border pt-8 text-sm text-muted-foreground">B.E. Electrical & Electronics, Anna University · MBA Systems & Operations, SCMS Cochin</p>
+          <p className="border-t border-border pt-8 text-sm text-muted-foreground">
+            B.E. Electrical & Electronics, Anna University · MBA Systems & Operations, SCMS Cochin
+          </p>
         </section>
 
         <section id="skills" className="scroll-mt-20 border-t border-border py-20">
@@ -391,7 +573,12 @@ function Index() {
                 <h3 className="font-display text-xl">{h}</h3>
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {items.map((s) => (
-                    <li key={s} className="rounded-full border border-border bg-card px-3 py-1 text-sm">{s}</li>
+                    <li
+                      key={s}
+                      className="rounded-full border border-border bg-card px-3 py-1 text-sm"
+                    >
+                      {s}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -404,13 +591,29 @@ function Index() {
         <div className="mx-auto max-w-6xl px-6 py-24">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">04 — Contact</p>
           <h2 className="mt-4 font-display text-5xl md:text-7xl">Let’s talk.</h2>
-          <p className="mt-6 max-w-xl opacity-75">Open to senior product and program roles in connected and embedded products.</p>
+          <p className="mt-6 max-w-xl opacity-75">
+            Open to senior product and program roles in connected and embedded products.
+          </p>
           <div className="mt-10 flex flex-wrap gap-3">
-            {[["Email", "mailto:you@example.com"], ["LinkedIn", "#"], ["Resume (PDF)", "#"]].map(([l, h]) => (
-              <a key={l} href={h} className="rounded-sm border border-primary-foreground/40 px-6 py-3 text-sm transition-colors hover:border-accent hover:bg-accent">{l}</a>
+            {[
+              ["Email", "mailto:YOUR_EMAIL"],
+              ["LinkedIn", "YOUR_LINKEDIN_URL"],
+              ["Resume (PDF)", "/resume.pdf"],
+            ].map(([l, h]) => (
+              <a
+                key={l}
+                href={h}
+                target={h.startsWith("http") || h.endsWith(".pdf") ? "_blank" : undefined}
+                rel={h.startsWith("http") || h.endsWith(".pdf") ? "noopener noreferrer" : undefined}
+                className="rounded-sm border border-primary-foreground/40 px-6 py-3 text-sm transition-colors hover:border-accent hover:bg-accent"
+              >
+                {l}
+              </a>
             ))}
           </div>
-          <p className="mt-20 text-xs opacity-60">© 2026 Vishnu Menon. Case studies are shared in NDA-safe form.</p>
+          <p className="mt-20 text-xs opacity-60">
+            © 2026 Vishnu Menon. Case studies are shared in NDA-safe form.
+          </p>
         </div>
       </section>
     </div>
