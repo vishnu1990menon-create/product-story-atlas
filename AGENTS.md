@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Share Guard360 outcome percentages through `src/lib/portfolio-metrics.ts` so stats, cases and career cards remain consistent and testable.
