@@ -363,6 +363,12 @@ function Index() {
                   <p className="text-muted-foreground">
                     <CareerBody c={c} />
                   </p>
+                  {c.subprojects && (
+                    <ul className="list-disc space-y-1 pl-4 text-sm marker:text-accent">
+                      {c.subprojects.map((project) => <li key={project}>{project}</li>)}
+                    </ul>
+                  )}
+                  {c.metric && <p className="text-sm font-medium text-accent">{c.metric}</p>}
                   {c.projects && (
                     <div className="grid gap-5 md:grid-cols-2">
                       {c.projects.map((p) => (
