@@ -4,9 +4,9 @@ import needBasedAdoption from "../assets/need-based-adoption-updated.png";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import { guard360Metrics } from "@/lib/portfolio-metrics";
-import photoUpload from "../assets/guard360-photo-upload.webp.asset.json";
-import parkingAnalytics from "../assets/parking-analytics.webp.asset.json";
-import atherCharging from "../assets/ather-charging.webp.asset.json";
+import guard360Collision from "../assets/guard360-collision.png";
+import parkingAnalyticsCase from "../assets/parking-analytics-case.png";
+import atherChargingCase from "../assets/ather-charging-case.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -70,7 +70,7 @@ const cases = [
   {
     t: "Guard360: fixing “pictures not taken”",
     m: "Cluster lead, Guard360",
-    img: photoUpload.url,
+    img: guard360Collision,
     ar: "aspect-[10/7]",
     mat: "bg-muted/30 p-2",
     wrap: "mx-auto max-h-[460px] object-contain",
@@ -86,13 +86,13 @@ const cases = [
   {
     t: "Parking for Navigation and Payments: growth, plateau, sundown",
     m: "Product Manager",
-    img: parkingAnalytics.url,
+    img: parkingAnalyticsCase,
     caption:
       "Transactions indexed to launch (1x). 12x = peak total; the plateau and drop followed legal and compliance roadblocks.",
     ar: "aspect-[5/4] md:aspect-[16/10]",
     mat: "bg-card p-2",
     wrap: "mx-auto max-h-[500px] object-contain",
-    alt: "Uploaded parking transaction analytics and growth chart",
+    alt: "Parking transactions indexed to launch, peaking at 12x then declining after legal and compliance roadblocks",
     p: "After market expansion, monthly parking transactions sat flat for a long time.",
     d: [
       "Redesigned the in-car parking experience using user studies, scenario mapping and competitive benchmarking, and worked with content providers on partner SLAs.",
@@ -104,11 +104,11 @@ const cases = [
   {
     t: "Ather Energy: Drive controller and neighborhood charging",
     m: "Program Manager, then Product Owner, Grid 2.0",
-    img: atherCharging.url,
+    img: atherChargingCase,
     ar: "aspect-[2/1]",
     mat: "bg-muted p-2",
     wrap: "mx-auto max-h-[440px] object-contain",
-    alt: "Uploaded Ather charging network, neighborhood charger and charging hardware photographs",
+    alt: "Ather neighborhood charger, app and Vida charger interoperability",
     p: "Scale a hardware-heavy product and a public charging network while keeping cost down.",
     d: [
       "Led the Drive Controller from POC to production, benchmarking competitor specs and building the roadmap behind the cost model and business case.",
