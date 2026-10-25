@@ -596,9 +596,8 @@ function Index() {
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             {[
-              ["Email", "mailto:YOUR_EMAIL"],
-              ["LinkedIn", "YOUR_LINKEDIN_URL"],
-              ["Resume (PDF)", "/resume.pdf"],
+              ["Email", "mailto:vishnu1990menon@gmail.com"],
+              ["LinkedIn", "www.linkedin.com/in/vishnu-menon-26a8b9102"],
             ].map(([l, h]) => (
               <a
                 key={l}
